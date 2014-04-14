@@ -15,8 +15,10 @@
 		(PRED-SEARCH slot (cdr frame))))
 
 (defun PATH-SL (slots concept)
-	;code here
-	)
+	(let ((result (FILLER (car slots) concept)))
+		(if (eq (cdr slots) NIL)
+			result
+			(PATH-SL (cdr slots) result))))
 
 (defun UNGAP (atom)
 	;code here
