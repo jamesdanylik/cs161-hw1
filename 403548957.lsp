@@ -45,13 +45,18 @@
 	(let ((oldfill (FILLER slot frame)))
 		(if (eq oldfill NIL) ;problem here processesing gaps
 			(append (append frame (list slot)) (list filler))
-			(REPLACE-SF slot filler frame)
+			(REPLACE-SF slot filler (cdr frame) NIL)
 			)))
 
-(defun REPLACE-SF (slot filler frame)
+(defun REPLACE-SF (slot filler frame accum)
 	;helper for ADD-SF
-	frame
-	)
+	(if (eq frame NIL)
+		(reverse accum)
+		(progn
+			(if (eq (car frame) slot)
+				(REPLACE-SF slot filler (cdr (cdr frame)) (cons filler (cons slot accum)))
+				(REPLACE-SF slot filler (cdr (cdr frame)) (cons (car (cdr frame)) (cons (car frame) accum)))))))
+
 
 (defun SAME-SF (frame1 frame2)
 	;problem 5 - TODO
