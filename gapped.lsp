@@ -9,7 +9,7 @@
                               L-NAME ( )
                               GENDER (FEMALE)))))
 
-(setq AG001 '(HUMANF-NAME (CHARLES)
+(setq AG001 '(HUMAN F-NAME (CHARLES)
 L-NAME ( )
 GENDER (MALE))
 )
@@ -37,3 +37,13 @@ L-NAME ( )
 GENDER (MALE))
 )
 
+(setq C3 '(THROW AGENT AG001
+                 OBJECT OBJ001 
+                 INTO (CONTAINER SHAPE (CYLINDRICAL)
+                                 FOR (TRASH)
+                                 REF (DEF))
+                 MANNER (SECRETLY)
+                 EXP-VIOL EXPV001
+                 LOC (HOME OWNER (HUMAN F-NAME (CHARLOTTE) 
+                                        L-NAME ( )
+                                        GENDER (FEMALE)))))
