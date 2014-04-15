@@ -26,22 +26,33 @@
 
 (defun UNGAP (atom)
 	; problem 3 - TODO
+	(let ((ugf (UNGAP-FRAME atom)))
+		(if (listp ugf)
+		(progn 
+			(let ((ugsf (UNGAP-SF (cdr ugf) ()))
+				(fname (car ugf)))
+					(cons fname (reverse ugsf))))
+		ugf)))
 
-	)
+
 
 (defun UNGAP-FRAME (frame)
-	(if (eq frame NIL)
-		NIL
-		(if (boundp (car frame))
-			(eval (car frame))
-			)))
+	(if (listp frame)
+		frame
+		(if (boundp frame)
+			(UNGAP-FRAME (eval frame))
+			frame)))
 
 (defun UNGAP-SF (sfpairs accum)
 	(if (eq sfpairs NIL)
 		(reverse accum)
-		(if (boundp (car (cdr sfpairs)))
-			(UNGAP-SF (cdr (cdr sfpairs)) (cons (eval (car (cdr sfpairs))) (cons (car sfpairs) accum)))
-			(UNGAP-SF (cdr (cdr sfpairs)) (cons (car (cdr sfpairs)) (cons (car sfpairs) accum))))))
+		(progn 
+			(if (symbolp (car (cdr sfpairs)))
+			(progn 
+				(if (boundp (car (cdr sfpairs)))
+					(UNGAP-SF (cons (UNGAP-FRAME (car (cdr sfpairs))) (cons (car sfpairs) (cdr (cdr sfpairs)))) accum)
+					(UNGAP-SF (cdr (cdr sfpairs)) (cons (car (cdr sfpairs)) (cons (car sfpairs) accum)))))
+			(UNGAP-SF (cdr (cdr sfpairs)) (cons (car sfpairs) (cons (car (cdr sfpairs)) accum)))))))
 
 (defun FRAME-CONTAINS (slot frame)
 	(let (predicates (cdr frame))
