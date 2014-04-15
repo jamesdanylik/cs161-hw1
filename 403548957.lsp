@@ -19,10 +19,10 @@
 	; problem 2 - DONE (waiting on gap fix)
 	; select a slot with a path. don't call with bad data!
 	; upgap first!
-	(let ((result (FILLER (car slots) concept)))
+	(let ((result (FILLER (car slots)  concept)))
 		(if (eq (cdr slots) NIL)
 			result
-			(PATH-SL (cdr slots) result))))
+			(PATH-SL (cdr slots) (ungap result)))))
 
 (defun UNGAP (atom)
 	; problem 3 - DONE.
