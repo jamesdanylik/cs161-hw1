@@ -25,7 +25,7 @@
 			(PATH-SL (cdr slots) result))))
 
 (defun UNGAP (atom)
-	; problem 3 - TODO
+	; problem 3 - DONE.
 	(let ((ugf (UNGAP-FRAME atom)))
 		(if (listp ugf)
 		(progn 
@@ -50,7 +50,7 @@
 			(if (symbolp (car (cdr sfpairs)))
 			(progn 
 				(if (boundp (car (cdr sfpairs)))
-					(UNGAP-SF (cons (UNGAP-FRAME (car (cdr sfpairs))) (cons (car sfpairs) (cdr (cdr sfpairs)))) accum)
+					(UNGAP-SF (cons (UNGAP (car (cdr sfpairs))) (cons (car sfpairs) (cdr (cdr sfpairs)))) accum)
 					(UNGAP-SF (cdr (cdr sfpairs)) (cons (car (cdr sfpairs)) (cons (car sfpairs) accum)))))
 			(UNGAP-SF (cdr (cdr sfpairs)) (cons (car sfpairs) (cons (car (cdr sfpairs)) accum)))))))
 
