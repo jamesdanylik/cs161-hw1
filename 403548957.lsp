@@ -40,12 +40,22 @@
 				'YES
 				(PRED-CONTAINS slot (cdr (cdr preds)))))))
 
+(defun CONTAINS-SF (slot sfpairs)
+	;returns T if sfpairs contains slot at top level
+	;returns NIL otherwise
+	(if (eq sfpairs NIL)
+		NIL
+		(progn 
+			(if (eq (car sfpairs) slot)
+				T
+				(CONTAINS-SF slot (cdr (cdr sfpairs)))))))
+
 (defun ADD-SF (slot filler frame)
-	;problem 4 - TODO
-	(let ((oldfill (FILLER slot frame)))
-		(if (eq oldfill NIL) ;problem here processesing gaps
+	;problem 4 - DONE. 
+	(let ((oldfill (CONTAINS-SF slot (cdr frame))))
+		(if (eq oldfill NIL) 
 			(append (append frame (list slot)) (list filler))
-			(REPLACE-SF slot filler (cdr frame) NIL)
+			(cons (car frame) (REPLACE-SF slot filler (cdr frame) NIL))
 			)))
 
 (defun REPLACE-SF (slot filler frame accum)
